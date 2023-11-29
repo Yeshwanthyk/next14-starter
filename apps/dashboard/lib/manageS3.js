@@ -1,17 +1,17 @@
-import AWS from "aws-sdk";
+import AWS from "aws-sdk"
 
 // Passing credentials to authenticate
 // TODO: Move to environment variables
 AWS.config.update({
-  accessKeyId: "AKIAUTJ74UWMBPZMTIWC",
-  secretAccessKey: "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",
+  accessKeyId: "",
+  secretAccessKey: "",
   region: "us-east-1",
-});
+})
 
 // Constructing S3 instance to execute API operations
 const s3 = new AWS.S3({
-  params: { Bucket: "yk-uploader" },
-});
+  params: { Bucket: "" },
+})
 
 /**
  * Allows the uploading, deletion, and listing of items for the AWS s3 bucket.
@@ -56,7 +56,7 @@ const manageS3 = (action, payload) => {
             ACL: "public-read",
           })
           .on("httpUploadProgress", payload.tracker)
-          .promise();
+          .promise()
       } else {
         return s3
           .upload({
@@ -64,15 +64,15 @@ const manageS3 = (action, payload) => {
             Body: payload.file,
             ACL: "public-read",
           })
-          .promise();
+          .promise()
       }
     case "delete":
-      return s3.deleteObject({ Key: payload.name }).promise();
+      return s3.deleteObject({ Key: payload.name }).promise()
     case "list":
-      return s3.listObjectsV2({ Prefix: payload.prefix }).promise();
+      return s3.listObjectsV2({ Prefix: payload.prefix }).promise()
     case "listAll":
-      return s3.listObjectsV2().promise();
+      return s3.listObjectsV2().promise()
   }
-};
+}
 
-export default manageS3;
+export default manageS3
