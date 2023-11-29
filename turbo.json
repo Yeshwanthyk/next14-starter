@@ -1,0 +1,24 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["**/.env.*local"],
+	"pipeline": {
+	  "build": {
+	    "dependsOn": ["^build"],
+	    "env": [
+	      "NEXT_PUBLIC_API_ENDPOINT",
+	      "NEXT_PUBLIC_BUCKET_NAME",
+	      "NEXT_PUBLIC_REGION",
+	      "NEXT_PUBLIC_ACCESS_KEY_ID",
+	      "NEXT_PUBLIC_SECRET_ACCESS_KEY",
+	      "NEXT_PUBLIC_GA_TRACKING_ID"
+	    ],
+	    "outputs": ["dist/**", ".next/**"]
+	  },
+	  "lint": {
+	    "outputs": []
+	  },
+	  "dev": {
+	    "cache": false
+	  }
+	}
+      }

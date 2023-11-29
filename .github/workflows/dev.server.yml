@@ -1,0 +1,22 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches:
+      - staging
+    paths:
+      - "server/**"
+
+jobs:
+  update_ssh_linode:
+    name: Telling API Server to Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
+          port: ${{ secrets.DEV_PORT }}
+          script: bash /root/app/monorepo/server/sync.sh
